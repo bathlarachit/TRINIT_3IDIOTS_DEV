@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "824248263875",
+    "project_id": "trinit-35b05",
+    "storage_bucket": "trinit-35b05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824248263875:android:10ffcab172c267301f2e76",
+        "android_client_info": {
+          "package_name": "com.example.trinit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824248263875-888guqrosb5gta4idkvttia182l6cvek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trinit",
+            "certificate_hash": "e5f1d1d1a81ba50121aa262b57f5bb37c555b816"
+          }
+        },
+        {
+          "client_id": "824248263875-6qals69p5bgq8c63v9gitgtcso10am7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu9LNtV62gAIvZAmSFzI4mizqXR3y2UWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824248263875-6qals69p5bgq8c63v9gitgtcso10am7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
