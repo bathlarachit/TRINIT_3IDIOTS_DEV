@@ -2,12 +2,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trinit/Modal/Users.dart';
 
-import '../../Backend/GoogleLogin.dart';
 import '../../Backend/SignUp.dart';
-import '../Home/HomePage.dart';
+import '../Password/OtpF.dart';
 import 'Login.dart';
 
 class Register extends StatefulWidget {
@@ -18,8 +17,15 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  String name = "", pass = "", mail = "";
+  Users user = Users();
   bool load = false, load2 = false;
+  int selectedRadio = 0;
+
+  setSelectedRadio(val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -45,7 +51,28 @@ class _RegisterState extends State<Register> {
                         ),
                       )
                     ],
-                  ),
+                  ), 
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                        RadioListTile(
+                            dense: true,
+                            value: 0,
+                            title: const Text("Philanthropists"),
+                            groupValue: selectedRadio,
+                            onChanged: (val) {
+                              setSelectedRadio(val);
+                            }),
+                        RadioListTile(
+                            dense: true,
+                            value: 1,
+                            title: const Text("NGO"),
+                            groupValue: selectedRadio,
+                            onChanged: (val) {
+                              setSelectedRadio(val);
+                            }),
+                        
+                      ]),
                   Column(children: [
                     const SizedBox(
                       height: 15,
@@ -55,14 +82,14 @@ class _RegisterState extends State<Register> {
                       child: TextField(
                         // controller: nameController,
                         onChanged: (value) {
-                          name = value;
+                          user.name = value;
                         },
                         style: const TextStyle(fontSize: 17),
                         decoration: InputDecoration(
                           //isDense: true,
                           contentPadding: const EdgeInsets.only(
                               left: 25, top: 10, bottom: 10, right: 20),
-                          labelText: 'Enter Name',
+                          labelText: selectedRadio==0?'Enter Name':'Enter NGO Name',
                           border: InputBorder.none,
                           filled: true,
                           fillColor: const Color(0xFFd8f2fd),
@@ -83,14 +110,44 @@ class _RegisterState extends State<Register> {
                       child: TextField(
                         // controller: nameController,
                         onChanged: (value) {
-                          mail = value;
+                          user.email = value;
                         },
                         style: const TextStyle(fontSize: 17),
                         decoration: InputDecoration(
                           //isDense: true,
                           contentPadding: const EdgeInsets.only(
                               left: 25, top: 10, bottom: 10, right: 20),
-                          labelText: 'Enter Email-Id',
+                          labelText: selectedRadio==0?'Enter Email-Id':'Enter NGO Email-Id',
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: const Color(0xFFd8f2fd),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.teal.shade300,
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 40,
+                      child: TextField(
+                        // controller: nameController,
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          user.phn = value;
+                          //print(phn);
+                        },
+                        style: const TextStyle(fontSize: 17),
+                        decoration: InputDecoration(
+                          //isDense: true,
+                          contentPadding: const EdgeInsets.only(
+                              left: 25, top: 10, bottom: 10, right: 20),
+                          labelText: selectedRadio==0?'Enter Phone Number':'Enter NGO Phone Number',
                           border: InputBorder.none,
                           filled: true,
                           fillColor: const Color(0xFFd8f2fd),
@@ -112,7 +169,7 @@ class _RegisterState extends State<Register> {
                         // controller: nameController,
                         obscureText: true,
                         onChanged: (value) {
-                          pass = value;
+                          user.pass = value;
                         },
                         style: const TextStyle(fontSize: 17),
                         decoration: InputDecoration(
@@ -162,21 +219,18 @@ class _RegisterState extends State<Register> {
                                     setState(() {
                                       load = true;
                                     });
-                                    await SignUp().signup(mail, pass, name);
+                                    int x = await SignUp().signup(user);
                                    
-                                    if (auth.currentUser != null) {
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HomePage()),
-                                                  (Route<dynamic> route) =>
-                                                      false);
-                                            } else {
-                                              setState(() {
-                                                load = false;
-                                              });
-                                            }
+                                    if (x==1) {
+                                      user.status=selectedRadio==0?"User":"NGO";
+                                      user.phn="+91${user.phn}";
+                                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>OtpScreen(user)),
+                                          );
+                                    } else {
+                                      setState(() {
+                                        load = false;
+                                      });
+                                    }
                                   },
                                   child: Text(
                                     "Register",
@@ -191,14 +245,16 @@ class _RegisterState extends State<Register> {
                             ],
                           )
                         : const CircularProgressIndicator(),
+                    const SizedBox(height: 15,),
                     const SizedBox(
-                      height: 30,
+                      child: Text("OR"),
                     ),
+                    const SizedBox(height: 15,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width / 2 - 30,
+                          width: MediaQuery.of(context).size.width - 40,
                           child: ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor:
@@ -234,65 +290,7 @@ class _RegisterState extends State<Register> {
                         const SizedBox(
                           width: 10,
                         ),
-                        load2 == false
-                            ? SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width / 2 - 20,
-                                // color: Colors.red,
-                                child: ElevatedButton.icon(
-                                  style: ButtonStyle(
-                                      padding: MaterialStateProperty.all(
-                                          const EdgeInsets.all(10)),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color.fromARGB(
-                                                  255, 255, 255, 255)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ))),
-                                  onPressed: () async {
-                                    setState(() {
-                                      load2 = true;
-                                    });
-                                    try{
-                                      await GoogleLogin().signInWithGoogle();
-                                      setState(() {
-                                      load2 = false;
-                                      });
-                                    }catch(e){
-                                      setState(() {
-                                        load2 = false;
-                                      });
-                                      Fluttertoast.showToast(msg: "Error ${e.toString()}");
-                                    }
-                                    if (auth.currentUser != null) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Welcome ${auth.currentUser!.displayName}");
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const HomePage()),
-                                          (Route<dynamic> route) => false);
-                                    }
-                                  },
-                                  icon: Image.asset(
-                                    'assets/google.png',
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  label: Text(
-                                    "Login With Google",
-                                    style: GoogleFonts.roboto(
-                                      color: Colors.black,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ))
-                            : const CircularProgressIndicator(),
+                       
                       ],
                     ),
                   ]),

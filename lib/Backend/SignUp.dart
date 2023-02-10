@@ -2,34 +2,42 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trinit/Modal/Users.dart';
 
 class SignUp {
   FirebaseDatabase db = FirebaseDatabase.instance;
 
-  Future signup(String mail, String pass, String name) async {
+  Future signup(Users user) async {
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(mail);
+        .hasMatch(user.email);
+    bool ph = RegExp("^([0-9]{10})").hasMatch(user.phn);
     if (emailValid == false) {
       //Fluttertoast.showToast(msg: user.mail);
       Fluttertoast.showToast(msg: "Email address not valid");
-      return;
+      return 0;
     }
-    if (name == "") {
+    if (ph==false){
+      Fluttertoast.showToast(msg: "Phone Number not valid");
+      return 0;
+    }
+    if (user.name == "") {
       Fluttertoast.showToast(msg: "User Name cannot be empty!!!");
-      return;
+      return 0;
     }
-    if (pass.length <= 5) {
+    if (user.pass.length <= 5) {
       Fluttertoast.showToast(msg: "Password length cannot be less than 5!!");
-      return;
+      return 0;
     }
-    FirebaseAuth auth = FirebaseAuth.instance;
-    try {
-      await auth.createUserWithEmailAndPassword(email: mail, password: pass);
-      auth.currentUser!.updateDisplayName(name);
-      Fluttertoast.showToast(msg: "Registered Successfully");
-    } catch (error) {
-      Fluttertoast.showToast(msg: "FireBase Error:-$error");
-    }
+    return 1;
+    // }
+    // FirebaseAuth auth = FirebaseAuth.instance;
+    // try {
+    //   await auth.createUserWithEmailAndPassword(email: user.email, password: user.pass);
+    //   auth.currentUser!.updateDisplayName(user.name);
+    //   Fluttertoast.showToast(msg: "Registered Successfully");
+    // } catch (error) {
+    //   Fluttertoast.showToast(msg: "FireBase Error:-$error");
+    // }
   }
 }

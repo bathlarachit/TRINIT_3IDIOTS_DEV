@@ -4,11 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Register.dart';
-import '../Backend/GoogleLogin.dart';
+import 'package:trinit/EnteringPage/Splash.dart';
 
 import '../../Backend/SignIn.dart';
-import '../Home/HomePage.dart';
+import 'Register.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -138,12 +137,10 @@ class _SignInState extends State<SignIn> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          HomePage()),
+                                                          Splash()),
                                                   (Route<dynamic> route) =>
                                                       false);
                                             } else {
-                                              Fluttertoast.showToast(
-                                                  msg: "Error Signing In!!!");
                                               setState(() {
                                                 load1 = false;
                                               });
@@ -254,79 +251,6 @@ class _SignInState extends State<SignIn> {
                                             "Forgot Password",
                                             style: GoogleFonts.roboto(
                                               color: Colors.white,
-                                              fontSize: MediaQuery.of(context).size.width*(0.04),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ))
-                                    : CircularProgressIndicator(),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                load2 == false
-                                    ? SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        // color: Colors.red,
-                                        child: ElevatedButton.icon(
-                                          style: ButtonStyle(
-                                              padding:
-                                                  MaterialStateProperty.all(
-                                                      EdgeInsets.all(10)),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Color.fromARGB(
-                                                          255, 255, 255, 255)),
-                                              shape: MaterialStateProperty.all(
-                                                  RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ))),
-                                          onPressed: () async {
-                                            setState(() {
-                                              load2 = true;
-                                            });
-                                            try{
-                                              await GoogleLogin().signInWithGoogle();
-                                              setState(() {
-                                              load2 = false;
-                                              });
-                                            }catch(e){
-                                              setState(() {
-                                                load2 = false;
-                                              });
-                                              Fluttertoast.showToast(msg: "Error ${e.toString()}");
-                                            }
-                                            
-                                            
-                                            if (auth.currentUser != null) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "Welcome ${auth.currentUser!.displayName}");
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HomePage()),
-                                                  (Route<dynamic> route) =>
-                                                      false);
-                                            }
-                                          },
-                                          icon: Image.asset(
-                                            'assets/google.png',
-                                            width: 35,
-                                            height: 35,
-                                          ),
-                                          label: Text(
-                                            "Login With Google",
-                                            style: GoogleFonts.roboto(
-                                              color: Colors.black,
                                               fontSize: MediaQuery.of(context).size.width*(0.04),
                                               fontWeight: FontWeight.bold,
                                             ),

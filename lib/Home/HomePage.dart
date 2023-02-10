@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 // ignore: prefer_const_constructors
                 decoration: BoxDecoration(
                     image:
-                        DecorationImage(image: AssetImage("assets/logo.png"))),
+                        DecorationImage(image: AssetImage("assets/images/logo.png"))),
               ),
               Text(
                 "Home",
