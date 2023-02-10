@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                         DecorationImage(image: AssetImage("assets/logo.png"))),
               ),
               Text(
-                "IEEE iSES 2022 Schedule",
+                "Home",
                 style: GoogleFonts.roboto(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * (0.05),

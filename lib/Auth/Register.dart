@@ -34,28 +34,6 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Container(
-                      height: 80,
-                      width: MediaQuery.of(context).size.width - 20,
-                      // ignore: prefer_const_constructors
-                      decoration: BoxDecoration(
-                          image: const DecorationImage(
-                              image: AssetImage("assets/ieee.png"))),
-                    )
-                  ]),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Container(
-                      //margin: EdgeInsets.only(left: 50),
-                      height: 150,
-                      width: 150,
-                      // ignore: prefer_const_constructors
-                      decoration: BoxDecoration(
-                          // color: Colors.red,
-                          image: const DecorationImage(
-                              image: AssetImage("assets/logo.png"))),
-                    )
-                  ]),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../Auth/Login.dart';
 import '../Home/HomePage.dart';
 
@@ -53,23 +51,9 @@ class _SplashState extends State<Splash> {
                                 // ignore: prefer_const_constructors
                                 decoration: BoxDecoration(
                                     image: const DecorationImage(
-                                        image: AssetImage("assets/ieee.png"))),
+                                        image: AssetImage("assets/google.png"))),
                               )
                             ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                //margin: EdgeInsets.only(left: 50),
-                                height: 200,
-                                width: 200,
-                                // ignore: prefer_const_constructors
-                                decoration: BoxDecoration(
-                                    // color: Colors.red,
-                                    image: const DecorationImage(
-                                        image: AssetImage("assets/logo.png"))),
-                              )
-                            ])
                       ],
                     )))));
   }
