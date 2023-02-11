@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:trinit/Community/CommunityDetails.dart';
+import 'package:trinit/Community/CommunityLandingPage.dart';
 import 'package:trinit/EnteringPage/Splash.dart';
 import 'package:trinit/Home/HomePage.dart';
 
@@ -20,8 +24,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/": (context) => const Splash(),
-        '/home': (context) => const HomePage()
+        "/": (context) =>  Splash(),
+        '/home': (context) =>  HomePage()
       },
     );
   }

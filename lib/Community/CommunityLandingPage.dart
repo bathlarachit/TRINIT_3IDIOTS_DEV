@@ -6,15 +6,17 @@ class CommunityLandingPage extends StatelessWidget {
   // CommunityLandingPage(Key? key) : super(key: key);
   final dbRef = FirebaseDatabase.instance.ref().child("Community");
 
+   CommunityLandingPage({super.key});
+
   List<String> getKeys(DataSnapshot list) {
     print("adaada");
     print(list.key.toString());
 
     List<String> keysList = [];
-    list.children.forEach((element) {
-      print(element.toString());
+    for (var element in list.children) {
       keysList.add(element.key.toString());
-    });
+    }
+    print(keysList.length);
     return keysList;
   }
 
@@ -62,7 +64,7 @@ class CommunityLandingPage extends StatelessWidget {
             return Container(
               height: 50,
               color: Colors.red[300],
-              child: Text("Error vhvh"),
+              child: const Text("Error vhvh"),
             );
           } else if (snapshot.hasData) {
             return ListView.builder(
@@ -84,7 +86,7 @@ class CommunityLandingPage extends StatelessWidget {
         return Container(
           height: 50,
           color: Colors.grey,
-          child: Text("Loading"),
+          child: const Text("Loading"),
         );
       }),
       future: fetchCommunityDetails(),
