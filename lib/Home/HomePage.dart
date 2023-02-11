@@ -43,22 +43,30 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                 Image(
-                      height: 70,
-                      width: 70,
-                      image: AssetImage('assets/images/man.png'),
+                Image(
+                  height: 70,
+                  width: 70,
+                  image: AssetImage('assets/images/man.png'),
+                ),
+                Column(
+                  children: [
+                    Text("Welcome Back! ${Staticfile.name}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Saturday, ${DateTime.now().day} Febraury',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "Welcome Back!${Staticfile.name}",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black)),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('Sunday, 12 Febraury',style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black),),
-                        ),
-                      ],
-                    ),
+                  ],
+                ),
                 ElevatedButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
@@ -101,7 +109,6 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 SizedBox(height: 20),
                 Row(
                   children: [
