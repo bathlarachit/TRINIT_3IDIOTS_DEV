@@ -1,11 +1,23 @@
-import 'dart:ffi';
+// ignore_for_file: prefer_const_constructors, must_be_immutable, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:trinit/modal/Staticfile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../VC.dart';
 import '../modal/ngo.dart';
 
+
+Future get()async{
+ String url = "upi://pay?pa=9328268483@ybl&pn=Shubhank&am=1&tn=TestPayment&cu=INR";
+ var result = await launch(url);
+     debugPrint(result.toString());
+     if (result ==true) {
+       print("Done");
+     } else if (result ==false){
+       print("Fail");
+     }
+}
 class InfoPage extends StatelessWidget {
    InfoPage({super.key, required this.ngo});
    NGO ngo;
@@ -90,7 +102,10 @@ class InfoPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(84, 116, 253, 1),
                           borderRadius: BorderRadius.circular(16)),
-                      child: const Center(
+                      child: InkWell(
+                        onTap: ()async{
+                          await get();
+                        },
                         child: Text(
                           'Donate',
                           style: TextStyle(color: Colors.white, fontSize: 15),
