@@ -1,10 +1,14 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trinit/BottomNavbar/BottomNavBar.dart';
+import 'package:trinit/Community/CommunityLandingPage.dart';
+import 'package:trinit/Modal/Staticfile.dart';
 import 'package:trinit/components/list.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 import '../EnteringPage/Splash.dart';
 
 class HomePage extends StatefulWidget {
@@ -79,29 +83,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0xFFd8f2fd),
       ),
       resizeToAvoidBottomInset: true,
-        bottomNavigationBar: GNav(
-          onTabChange: (index) {},
-          activeColor: Colors.blue,
-          gap: 20,
-          tabs: const [
-            GButton(
-              icon: Icons.home,
-              text: 'Home',
-            ),
-            GButton(
-              icon: Icons.bookmark,
-              text: 'Home',
-            ),
-            GButton(
-              icon: Icons.feed,
-              text: 'Feed',
-            ),
-            GButton(
-              icon: Icons.person,
-              text: 'Profile',
-            ),
-          ],
-        ),
+        bottomNavigationBar: BottomNavbar().navbar(context),
         body: Padding(
           padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
           child: Column(
