@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trinit/BottomNavbar/BottomNavBar.dart';
-import 'package:trinit/Modal/Staticfile.dart';
 import 'package:trinit/constants.dart';
+import 'package:trinit/modal/Staticfile.dart';
 import 'package:trinit/query.dart';
 import 'package:trinit/searchResult.dart';
+
 import '../EnteringPage/Splash.dart';
 import '../Ngo/ngo_fetch.dart';
 import '../components/bigCard.dart';
@@ -123,6 +124,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TextFormField(
                       onChanged: (value) {
@@ -153,13 +155,13 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Color.fromARGB(255, 0, 0, 0),
                           border: Border.all(),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(16)),
                         ),
-                        height: 60,
-                        width: 60,
+                        height: 40,
+                        width: 40,
                         child: const Icon(
                           Icons.search_rounded,
                           color: Colors.white,

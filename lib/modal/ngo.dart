@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
+
 class NGO {
   String name;
   var impact = [];
   var community = [];
   var acc_num;
   var ifsc;
-  String key;
+  String key="";
   String loc;
   String acc_name;
   var mission;

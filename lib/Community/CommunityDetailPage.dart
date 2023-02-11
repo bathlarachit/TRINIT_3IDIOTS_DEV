@@ -1,48 +1,61 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, use_build_context_synchronously, prefer_is_empty
-
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trinit/Community/CommunityCard.dart';
-import 'package:trinit/Community/CommunityDetails.dart';
-import 'package:trinit/Community/CreateCommunity.dart';
+import 'package:trinit/Community/CommunityPost.dart';
+import 'package:trinit/Community/CommunityPostCard.dart';
 
 import '../BottomNavbar/BottomNavBar.dart';
 import '../EnteringPage/Splash.dart';
 import '../modal/Staticfile.dart';
+import 'CreatePost.dart';
 
-class CommunityLandingPage extends StatelessWidget {
-  // CommunityLandingPage(Key? key) : super(key: key);
-  final dbRef = FirebaseDatabase.instance.ref().child("Community");
+class CommunityDetailPage extends StatefulWidget {
+  String domain = "";
 
- // CommunityLandingPage({super.key});
-
-  List<String> getKeys(DataSnapshot list) {
-    List<String> keysList = [];
-    for (var child in list.children) {
-      keysList.add(child.key.toString());
-    }
-    return keysList;
+  CommunityDetailPage(String domain, {super.key}) {
+    this.domain = domain;
   }
 
-  Future<List<CommunityDetails>> fetchCommunityDetails() async {
-    final snapshot = await dbRef.get();
+  @override
+  State<CommunityDetailPage> createState() => _CommunityDetailPageState();
+}
+
+class _CommunityDetailPageState extends State<CommunityDetailPage> {
+  final dbRef = FirebaseDatabase.instance.ref().child("CommunityPosts");
+
+  List<String> getKeys(DataSnapshot list) {
+    List<String> listKeys = [];
+    for (var child in list.children) {
+      //print("aas" + child.key.toString());
+      listKeys.add(child.key.toString());
+    }
+    return listKeys;
+  }
+
+  Future<List<CommunityPost>> fetchCommunityPosts() async {
+    final snapshot = await dbRef.child(widget.domain.toString()).get();
     if (snapshot.exists) {
-      List<CommunityDetails> communityList = [];
-      for (var community in snapshot.children) {
-        CommunityDetails details = CommunityDetails(
-            community.key.toString(),
-            community.child("domain").value.toString(),
-            getKeys(community.child("memberList")),
-            community.child("motto").value.toString(),
-            getKeys(community.child("ngoId")),
-            community.child("photo").value.toString());
-        communityList.add(details);
+      List<CommunityPost> communityPosts = [];
+      for (var post in snapshot.children) {
+        //print(snapshot.children.length);
+        CommunityPost postDetail = CommunityPost(
+            post.key.toString(),
+            post.child("photoLink").value.toString(),
+            post.child("mssg").value.toString(),
+            post.child("createdBy").value.toString(),
+            getKeys(post.child("comments")),
+            // int.parse(post.child("noOfLikes").value.toString()),
+            getKeys(post.child("likes")));
+        // print(postDetail.createdBy);
+        // print(postDetail.mssg);
+        // // print(postDetail.noOfLikes);
+        communityPosts.add(postDetail);
       }
-      return communityList;
+      return communityPosts;
     } else {
       return [];
     }
@@ -65,11 +78,11 @@ class CommunityLandingPage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * (0.1),
                       // ignore: prefer_const_constructors
                       decoration: BoxDecoration(
-                          image: DecorationImage(
+                          image: const DecorationImage(
                               image: AssetImage("assets/images/logo.png"))),
                     ),
                     Text(
-                      "Community",
+                      widget.domain,
                       style: GoogleFonts.roboto(
                         color: Colors.black,
                         fontSize: MediaQuery.of(context).size.width * (0.05),
@@ -79,9 +92,9 @@ class CommunityLandingPage extends StatelessWidget {
                     ElevatedButton(
                       style: ButtonStyle(
                           padding:
-                              MaterialStateProperty.all(EdgeInsets.all(10)),
+                              MaterialStateProperty.all(const EdgeInsets.all(10)),
                           backgroundColor: MaterialStateProperty.all(
-                              Color.fromARGB(255, 255, 255, 255)),
+                              const Color.fromARGB(255, 255, 255, 255)),
                           shape:
                               MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -96,7 +109,7 @@ class CommunityLandingPage extends StatelessWidget {
                         }
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => Splash()),
+                            MaterialPageRoute(builder: (context) => const Splash()),
                             (Route<dynamic> route) => false);
                       },
                       child: Text(
@@ -111,61 +124,67 @@ class CommunityLandingPage extends StatelessWidget {
                   ],
                 ),
               ),
-              backgroundColor: Color(0xFFd8f2fd),
+              backgroundColor: const Color(0xFFd8f2fd),
             ),
             resizeToAvoidBottomInset: true,
             bottomNavigationBar: BottomNavbar().navbar(context),
-            body: FutureBuilder(
-              builder: ((context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    // show Error
-                    return Container(
-                      height: 50,
-                      color: Colors.red[300],
-                      child: const Text("Error"),
-                    );
-                  } else if (snapshot.hasData) {
-                    if (snapshot.data!.length > 0) {
-                      return Stack(
-                        children: 
-                        [                          
-                          ListView.builder(
+            body: 
+            
+            Stack(
+              children: [
+                FutureBuilder(
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      // show Error
+                      print(snapshot.error);
+                      return Container(
+                        height: 50,
+                        color: Colors.red[300],
+                        child: const Text("Error vhvh"),
+                      );
+                    } else if (snapshot.hasData) {
+                      if (snapshot.data!.isNotEmpty) {
+                        return ListView.builder(
                             itemCount: snapshot.data!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return CommunityCard(snapshot.data![index]);
-                            }),
-                            SizedBox(width: MediaQuery.of(context).size.width,child: 
+                              return CommunityPostCard(snapshot.data![index]);
+                            });
+                      }
+                      else{
+                        return const Center(child:Text("No Posts Yet!!"));
+                      }
+                    }
+                  }
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    child: const Center(child: CircularProgressIndicator(),)
+                  );
+                }),
+                future: fetchCommunityPosts(),
+              ),
+              Staticfile.type=="Ngo"? SizedBox(width: MediaQuery.of(context).size.width,child: 
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Padding(padding: EdgeInsets.all(15),child: 
+                              Padding(padding: const EdgeInsets.all(15),child: 
                               FloatingActionButton(
-                                backgroundColor:Color.fromARGB(255, 255, 124, 124) ,
+                                backgroundColor:const Color.fromARGB(255, 0, 0, 0) ,
                                 onPressed: (){
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => CreateCommunity()),
+                                    MaterialPageRoute(builder: (context) =>  CreatePost(widget.domain)),
                                     );
                                 },
-                                child: Icon(Icons.add,size: 30,),
+                                child: const Icon(Icons.add,size: 30,),
                               ))
                             ],
-                          )),
-                            
-                        ]
-                      );
-                    }
-                  }
-                }
-                return Container(
-                  height: MediaQuery.of(context).size.height,
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  child: const Center(child: CircularProgressIndicator(),)
-                );
-              }),
-              future: fetchCommunityDetails(),
+                          )):const SizedBox(),
+
+
+            ]
             )));
   }
 }

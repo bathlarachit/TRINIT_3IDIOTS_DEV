@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'otpbody.dart';
 
-import '../Modal/Users.dart';
+import '../modal/Users.dart';
 
 class OtpScreen extends StatelessWidget {
   Users u = Users();
