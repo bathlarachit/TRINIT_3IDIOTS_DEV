@@ -47,7 +47,7 @@ class SignsIn {
       if (auth.currentUser != null) {
         String path = "AccountType/"+auth.currentUser!.uid;
         DataSnapshot s = await db.ref(path).get();
-        String type = s.value as String;
+        String type = s.value.toString();
         if(type=="NGO"){
           path="Ngo/"+auth.currentUser!.uid+"/verified";
           DataSnapshot s = await db.ref(path).get();
