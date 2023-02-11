@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trinit/EnteringPage/Splash.dart';
-import 'package:trinit/Home/HomePage.dart';
+import 'package:trinit/components/info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/": (context) => const Splash(),
-        '/home': (context) => const HomePage()
+        "/": (context) => const InfoPage(),
+        '/home': (context) => const Splash()
       },
     );
   }
