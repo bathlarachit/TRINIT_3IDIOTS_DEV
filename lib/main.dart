@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trinit/Home/HomePage.dart';
 import 'package:trinit/Ngo/ngo_list.dart';
 
+import 'Community/CommunityLandingPage.dart';
 import 'EnteringPage/Splash.dart';
 
 void main() async {
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        "/": (context) => const Splash(),
-        '/home': (context) => const Splash()
-      },
+      home:  CommunityLandingPage(),
+      // routes: {
+      //   "/": (context) => const Splash(),
+      //   '/home': (context) => const Splash()
+      // },
     );
   }
 }

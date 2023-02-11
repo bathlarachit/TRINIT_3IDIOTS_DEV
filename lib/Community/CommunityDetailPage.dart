@@ -1,46 +1,57 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trinit/Community/CommunityCard.dart';
-import 'package:trinit/Community/CommunityDetails.dart';
+import 'package:trinit/Community/CommunityPost.dart';
+import 'package:trinit/Community/CommunityPostCard.dart';
 
 import '../BottomNavbar/BottomNavBar.dart';
 import '../EnteringPage/Splash.dart';
 import '../Modal/Staticfile.dart';
 
-class CommunityLandingPage extends StatelessWidget {
-  // CommunityLandingPage(Key? key) : super(key: key);
-  final dbRef = FirebaseDatabase.instance.ref().child("Community");
+class CommunityDetailPage extends StatefulWidget {
+  String domain = "";
 
-  // CommunityLandingPage({super.key});
-
-  List<String> getKeys(DataSnapshot list) {
-    List<String> keysList = [];
-    for (var child in list.children) {
-      keysList.add(child.key.toString());
-    }
-    return keysList;
+  CommunityDetailPage(String domain) {
+    print(domain);
+    this.domain = domain;
   }
 
-  Future<List<CommunityDetails>> fetchCommunityDetails() async {
-    final snapshot = await dbRef.get();
+  @override
+  State<CommunityDetailPage> createState() => _CommunityDetailPageState();
+}
+
+class _CommunityDetailPageState extends State<CommunityDetailPage> {
+  final dbRef = FirebaseDatabase.instance.ref().child("CommunityPosts");
+
+  List<String> getKeys(DataSnapshot list) {
+    List<String> listKeys = [];
+    for (var child in list.children) {
+      listKeys.add(child.key.toString());
+    }
+    return listKeys;
+  }
+
+  Future<List<CommunityPost>> fetchCommunityPosts() async {
+    final snapshot = await dbRef.child(widget.domain.toString()).get();
     if (snapshot.exists) {
-      List<CommunityDetails> communityList = [];
-      for (var community in snapshot.children) {
-        CommunityDetails details = CommunityDetails(
-            community.key.toString(),
-            community.child("domain").value.toString(),
-            getKeys(community.child("memberList")),
-            community.child("motto").value.toString(),
-            getKeys(community.child("ngoId")),
-            community.child("photo").value.toString());
-        communityList.add(details);
+      List<CommunityPost> communityPosts = [];
+      for (var post in snapshot.children) {
+        CommunityPost postDetail = CommunityPost(
+            post.key.toString(),
+            post.child("photoLink").value.toString(),
+            post.child("mssg").value.toString(),
+            post.child("createdBy").value.toString(),
+            getKeys(post.child("comments")),
+            post.child("noOfLikes").value as int,
+            getKeys(post.child("likes")));
+        print(postDetail.createdBy);
+        print(postDetail.mssg);
+        print(postDetail.noOfLikes);
+        communityPosts.add(postDetail);
       }
-      return communityList;
+      return communityPosts;
     } else {
       return [];
     }
@@ -128,7 +139,7 @@ class CommunityLandingPage extends StatelessWidget {
                       return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return CommunityCard(snapshot.data![index]);
+                            return CommunityPostCard(snapshot.data![index]);
                           });
                     }
                   }
@@ -139,7 +150,7 @@ class CommunityLandingPage extends StatelessWidget {
                   child: const Text("Loading"),
                 );
               }),
-              future: fetchCommunityDetails(),
+              future: fetchCommunityPosts(),
             )));
   }
 }

@@ -1,52 +1,42 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:trinit/Community/CommunityDetails.dart';
-import 'package:trinit/Community/CommunityDetailPage.dart';
+import 'dart:ffi';
 
-class CommunityCard extends StatefulWidget {
-  String id = "";
-  String domain = "";
-  List<String> memberList = [];
-  String motto = "";
-  List<String> ngoId = [];
-  String photo = "";
-  CommunityCard(CommunityDetails details) {
-    this.id = details.id;
-    this.domain = details.domain;
-    this.memberList = details.memberList;
-    this.motto = details.motto;
-    this.ngoId = details.ngoId;
-    this.photo = details.photo;
+import 'package:flutter/material.dart';
+import 'package:trinit/Community/CommunityPost.dart';
+import 'package:trinit/Modal/Staticfile.dart';
+
+class CommunityPostCard extends StatefulWidget {
+  CommunityPost post = CommunityPost("", "", "", "", [], 0, []);
+
+  CommunityPostCard(CommunityPost post) {
+    this.post.commentKeys = post.commentKeys;
+    this.post.createdBy = post.createdBy;
+    this.post.mssg = post.mssg;
+    this.post.photoLink = post.photoLink;
+    this.post.postId = post.postId;
+    this.post.noOfLikes = post.noOfLikes;
+    this.post.likes = post.likes;
   }
 
   @override
-  State<CommunityCard> createState() => _CommunityCardState();
+  State<CommunityPostCard> createState() => _CommunityPostCardState();
 }
 
-class _CommunityCardState extends State<CommunityCard> {
-  late String userId = "userid1";
+class _CommunityPostCardState extends State<CommunityPostCard> {
+  int noOfLikes = 0;
+  bool liked = false;
+  Color likeColor = Colors.white;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseAuth auth = FirebaseAuth.instance;
-    userId = auth.currentUser == null ? "" : auth.currentUser!.uid;
-    print(userCheck().toString());
-  }
-
-  bool userCheck() {
-    userId = "userid1";
-    return widget.memberList.contains(userId);
-  }
-
-  String getButtonString() {
-    return (userCheck()) ? "Go to Community" : "Join Community";
+    noOfLikes = widget.post.noOfLikes;
+    liked = widget.post.likes.contains(Staticfile.uid.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return (Center(
       child: Container(
           decoration: BoxDecoration(
               color: const Color.fromRGBO(84, 116, 253, 1),
@@ -69,7 +59,7 @@ class _CommunityCardState extends State<CommunityCard> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16.0),
                         child: Image.network(
-                          widget.photo,
+                          widget.post.photoLink,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -82,32 +72,25 @@ class _CommunityCardState extends State<CommunityCard> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(2.0),
-                            child: Text(widget.domain,
+                            child: Text(widget.post.mssg,
                                 style: const TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.white,
                                     decoration: TextDecoration.none)),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Text(widget.motto,
-                                style: const TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                    decoration: TextDecoration.none)),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Text(
-                                  "${widget.memberList.length.toString()} members",
-                                  style: const TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.white,
-                                      decoration: TextDecoration.none))),
                           Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Text(
-                                "${widget.ngoId.length.toString()} NGOs associated",
+                                "Created By ${widget.post.createdBy.toString()}",
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.none)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Text(
+                                "Likes Count : ${widget.post.noOfLikes.toString()}",
                                 style: const TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.white,
@@ -115,25 +98,25 @@ class _CommunityCardState extends State<CommunityCard> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
-                            child: ElevatedButton(
+                            child: ElevatedButton.icon(
                               onPressed: () {
-                                if (userCheck()) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CommunityDetailPage(
-                                                  widget.domain)));
-                                } else {}
+                                setState(() {
+                                  if (liked == false) {
+                                    noOfLikes++;
+                                    liked = !liked;
+                                    likeColor = Colors.pink;
+                                  } else {
+                                    noOfLikes--;
+                                    liked = !liked;
+                                    likeColor = Colors.white;
+                                  }
+                                });
                               },
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.deepOrange)),
-                              child: Text(getButtonString(),
-                                  style: const TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.white,
-                                      decoration: TextDecoration.none)),
+                              // style: ButtonStyle(
+                              //     backgroundColor: MaterialStateProperty.all(
+                              //         Colors.deepOrange)),
+                              icon: Icon(Icons.favorite, color: likeColor),
+                              label: Text("Like"),
                             ),
                           ),
                         ],
@@ -142,6 +125,6 @@ class _CommunityCardState extends State<CommunityCard> {
                   ],
                 ),
               ))),
-    );
+    ));
   }
 }
