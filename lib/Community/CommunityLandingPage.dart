@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:trinit/Community/CommunityDetails.dart';
 
 import '../BottomNavbar/BottomNavBar.dart';
 import '../EnteringPage/Splash.dart';
+import '../Modal/Staticfile.dart';
 
 class CommunityLandingPage extends StatelessWidget {
   // CommunityLandingPage(Key? key) : super(key: key);
@@ -98,7 +101,7 @@ class CommunityLandingPage extends StatelessWidget {
                     ))),
                 onPressed: () async {
                   try {
-                    
+                    Staticfile.navIndex=0;
                     await auth.signOut();
                     Fluttertoast.showToast(msg: "Signed Out");
                   } catch (e) {

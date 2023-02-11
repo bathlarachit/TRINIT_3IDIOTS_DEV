@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trinit/Backend/GetUserDetails.dart';
 import 'package:trinit/BottomNavbar/BottomNavBar.dart';
 import 'package:trinit/constants.dart';
 import '../EnteringPage/Splash.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
