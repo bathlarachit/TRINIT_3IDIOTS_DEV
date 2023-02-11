@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trinit/components/list.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: GNav(
+          onTabChange: (index) {},
+          activeColor: Colors.blue,
+          gap: 20,
+          tabs: const [
+            GButton(
+              icon: Icons.home,
+              text: 'Home',
+            ),
+            GButton(
+              icon: Icons.bookmark,
+              text: 'Home',
+            ),
+            GButton(
+              icon: Icons.feed,
+              text: 'Feed',
+            ),
+            GButton(
+              icon: Icons.person,
+              text: 'Profile',
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
           child: Column(
