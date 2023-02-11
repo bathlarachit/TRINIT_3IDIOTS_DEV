@@ -14,7 +14,6 @@ class CommunityDetailPage extends StatefulWidget {
   String domain = "";
 
   CommunityDetailPage(String domain) {
-    print(domain);
     this.domain = domain;
   }
 
@@ -28,6 +27,7 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
   List<String> getKeys(DataSnapshot list) {
     List<String> listKeys = [];
     for (var child in list.children) {
+      //print("aas" + child.key.toString());
       listKeys.add(child.key.toString());
     }
     return listKeys;
@@ -38,17 +38,18 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
     if (snapshot.exists) {
       List<CommunityPost> communityPosts = [];
       for (var post in snapshot.children) {
+        //print(snapshot.children.length);
         CommunityPost postDetail = CommunityPost(
             post.key.toString(),
             post.child("photoLink").value.toString(),
             post.child("mssg").value.toString(),
             post.child("createdBy").value.toString(),
             getKeys(post.child("comments")),
-            post.child("noOfLikes").value as int,
+            // int.parse(post.child("noOfLikes").value.toString()),
             getKeys(post.child("likes")));
-        print(postDetail.createdBy);
-        print(postDetail.mssg);
-        print(postDetail.noOfLikes);
+        // print(postDetail.createdBy);
+        // print(postDetail.mssg);
+        // // print(postDetail.noOfLikes);
         communityPosts.add(postDetail);
       }
       return communityPosts;
@@ -129,6 +130,7 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
                     // show Error
+                    print(snapshot.error);
                     return Container(
                       height: 50,
                       color: Colors.red[300],

@@ -25,7 +25,9 @@ class CommunityCard extends StatefulWidget {
 }
 
 class _CommunityCardState extends State<CommunityCard> {
-  late String userId = "userid1";
+  late String userId = "";
+  final dbRef = FirebaseDatabase.instance.ref().child("Community");
+
   @override
   void initState() {
     // TODO: implement initState
@@ -35,8 +37,15 @@ class _CommunityCardState extends State<CommunityCard> {
     print(userCheck().toString());
   }
 
+  void addUserToMemberList(String communityId) async{
+    String userId = Staticfile.uid;
+    await dbRef.child(communityId.toString()).child("memberList").update({
+      userId.toString():true,
+    });
+  }
+
   bool userCheck() {
-    userId = "userid1";
+    // userId = "userid1";
     return widget.memberList.contains(userId);
   }
 
@@ -124,7 +133,9 @@ class _CommunityCardState extends State<CommunityCard> {
                                           builder: (context) =>
                                               CommunityDetailPage(
                                                   widget.domain)));
-                                } else {}
+                                } else {
+                                  addUserToMemberList(widget.id);
+                                }
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
