@@ -135,7 +135,7 @@ class CommunityLandingPage extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               return CommunityCard(snapshot.data![index]);
                             }),
-                            SizedBox(width: MediaQuery.of(context).size.width,child: 
+                            Staticfile.type=="Ngo"? SizedBox(width: MediaQuery.of(context).size.width,child: 
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -152,7 +152,7 @@ class CommunityLandingPage extends StatelessWidget {
                                 child: Icon(Icons.add,size: 30,),
                               ))
                             ],
-                          )),
+                          )):SizedBox(),
                             
                         ]
                       );
