@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, unused_local_variable
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, unused_local_variable, avoid_unnecessary_containers
 
 import 'dart:async';
 

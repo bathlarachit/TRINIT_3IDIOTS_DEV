@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
                         const DecorationImage(image: AssetImage("assets/images/logo.png"))),
               ),
               Text(
-                "Home",
+                "Profile",
                 style: GoogleFonts.roboto(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * (0.05),
