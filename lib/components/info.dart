@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trinit/modal/Staticfile.dart';
 
+import '../VC.dart';
 import '../Modal/Staticfile.dart';
 import '../modal/ngo.dart';
 
@@ -9,6 +11,12 @@ class InfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String type = Staticfile.type;
+    String id = Staticfile.uid;
+    String name = Staticfile.name;
+    String ngoId = ngo.key;
+    String callId = id + ngoId;
+
     print(Staticfile.type);
     return SafeArea(
       child: Scaffold(
@@ -18,6 +26,24 @@ class InfoPage extends StatelessWidget {
               width: double.infinity,
               height: 260,
               image: NetworkImage(ngo.photo_link),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 300),
+              child: IconButton(
+                  onPressed: () {
+                    type = 'User';
+
+                    if (type == 'User') {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CallPage(
+                                  callID: callId, userName: name, userid: id)));
+                    } else {
+                      print('NGo to NGo vc not allowed');
+                    }
+                  },
+                  icon: const Icon(Icons.video_call_outlined)),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 240.0),

@@ -12,6 +12,7 @@ import 'package:trinit/Home/HomePage.dart';
 
 import '../Auth/Login.dart';
 import '../constants.dart';
+
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -20,13 +21,14 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
   Future getDetails(FirebaseAuth auth) async {
     FirebaseDatabase db = FirebaseDatabase.instance;
-    String path = "AccountType/"+auth.currentUser!.uid;
+    String path = "AccountType/" + auth.currentUser!.uid;
     DataSnapshot s = await db.ref(path).get();
-    GetUserDetails().getUserDetails(s.value.toString()=="NGO"?"NGO":"Users");
+    GetUserDetails()
+        .getUserDetails(s.value.toString() == "NGO" ? "NGO" : "Users");
   }
+
   @override
   void initState() {
     super.initState();
@@ -62,7 +64,7 @@ class _SplashState extends State<Splash> {
               Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "Blogesta",
+                    "HelpEasy",
                     style: GoogleFonts.permanentMarker(
                         color: colour, fontSize: 32),
                   )),
