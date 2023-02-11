@@ -9,6 +9,11 @@ Future<List<NGO>> getNgoList() async {
   if (snapshot.exists) {
     for (var i in snapshot.children) {
       try {
+        var imp = [];
+
+        for (var j in i.child('impact').children) {
+          imp.add(j);
+        }
         NGO ngo = NGO(
           key: i.key.toString(),
           loc: i.child("location").value.toString(),
@@ -20,11 +25,7 @@ Future<List<NGO>> getNgoList() async {
           acc_num: int.parse(
               i.child("accountProof").child('accountNo').value.toString()),
           community: [],
-          impact: [],
-          // for(var j in i.child('impact').childer)
-          // {
-
-          // }
+          impact: imp,
           mission: i.child('mission').value.toString(),
           photo_link: i.child('photo').value.toString(),
           prev_work: i.child('previousWork').value,

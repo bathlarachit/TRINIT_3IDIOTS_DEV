@@ -29,8 +29,20 @@ class _HomePageState extends State<HomePage> {
   var query = "";
   List<NGO> ngoList = [];
 
+  List<NGO> nq = [];
+  List<String> klist = [];
+
   @override
   void initState() {
+    klist = Staticfile.selectedImpact;
+
+    getNgoList().then((value) {
+      setState(() {
+        nq = value;
+        nq = recFilter(nq, klist);
+      });
+    });
+
     super.initState();
   }
 
@@ -166,20 +178,34 @@ class _HomePageState extends State<HomePage> {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
-                    TextButton(onPressed: () {}, child: Text('View More'))
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/NgoList');
+                        },
+                        child: Text('View More'))
                   ],
                 ),
                 SizedBox(height: 10),
-                // SizedBox(
-                //   height: 250,
-                //   child: ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemCount: 5,
-                //     itemBuilder: (BuildContext context, int index) => BigCard(
-                //                 img: snapshot.data![index].photo_link,
-                //                 name: snapshot.data![index].name),,
-                //   ),
-                // ),
+                SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: nq.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => InfoPage(
+                                          ngo: nq[index],
+                                        )));
+                          },
+                          child: BigCard(
+                              img: nq[index].photo_link, name: nq[index].name),
+                        );
+                      }),
+                ),
                 SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

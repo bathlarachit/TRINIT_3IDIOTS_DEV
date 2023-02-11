@@ -8,6 +8,25 @@ List<String> getKeyWords(String str) {
   return klist;
 }
 
+List<NGO> recFilter(List<NGO> nglist, List<String> sList) {
+  List<NGO> ngv = [];
+
+  for (int i = 0; i < nglist.length; i++) {
+    var t = 0;
+    for (var j in sList) {
+      for (var k in nglist[i].impact) {
+        if (j == k) {
+          t = 1;
+          break;
+        }
+      }
+    }
+    ngv.add(nglist[i]);
+  }
+
+  return ngv;
+}
+
 List<NGO> filter(klist, List<NGO> nglist) {
   List<NGO> nlist = [];
 

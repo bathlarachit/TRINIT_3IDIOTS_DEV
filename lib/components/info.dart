@@ -51,7 +51,9 @@ class InfoPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const CallPage(
+
                                   callID: "callId", userName: "shreeram", userid: "id2")));
+
                     } else {
                       print('NGo to NGo vc not allowed');
                     }
