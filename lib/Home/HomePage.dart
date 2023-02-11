@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trinit/Backend/GetUserDetails.dart';
 import 'package:trinit/BottomNavbar/BottomNavBar.dart';
+import 'package:trinit/Modal/Staticfile.dart';
 import 'package:trinit/constants.dart';
+
 import '../EnteringPage/Splash.dart';
 import '../components/bigCard.dart';
 
@@ -25,28 +26,27 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 80,
           title: SizedBox(
-            height: kToolbarHeight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  //margin: EdgeInsets.only(left: 50),
-                  height: MediaQuery.of(context).size.width * (0.1),
-                  width: MediaQuery.of(context).size.width * (0.1),
-                  // ignore: prefer_const_constructors
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/logo.png"))),
-                ),
-                Text(
-                  "Home",
-                  style: GoogleFonts.roboto(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * (0.05),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                 Image(
+                      height: 70,
+                      width: 70,
+                      image: AssetImage('assets/images/man.png'),
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Welcome Back!${Staticfile.name}",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black)),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('Sunday, 12 Febraury',style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black),),
+                        ),
+                      ],
+                    ),
                 ElevatedButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
@@ -89,28 +89,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Image(
-                      height: 70,
-                      width: 70,
-                      image: AssetImage('assets/images/man.png'),
-                    ),
-                    Column(
-                      children: const [
-                        Text(
-                          'Welcome Back!',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('Sunday, 12 Febraury'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                
                 SizedBox(height: 20),
                 Row(
                   children: [
