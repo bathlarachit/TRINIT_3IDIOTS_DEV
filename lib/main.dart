@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  CommunityLandingPage(),
-      // routes: {
-      //   "/": (context) =>  Splash(),
-      //   '/home': (context) =>  HomePage(),
+      
+      routes: {
+        "/": (context) =>  Splash(),
+        '/home': (context) =>  HomePage(),
         '/NgoList':(context)=>NgoList()
-      // },
+      },
     );
   }
 }

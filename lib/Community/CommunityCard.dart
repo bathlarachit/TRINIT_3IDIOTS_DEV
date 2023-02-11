@@ -1,9 +1,12 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:trinit/Community/CommunityDetails.dart';
 import 'package:trinit/Community/CommunityDetailPage.dart';
-import '../Modal/Staticfile.dart';
+import 'package:trinit/Community/CommunityDetails.dart';
+
+import '../modal/Staticfile.dart';
 
 
 class CommunityCard extends StatefulWidget {
@@ -20,6 +23,7 @@ class CommunityCard extends StatefulWidget {
     motto = details.motto;
     ngoId = details.ngoId;
     photo = details.photo;
+    print(ngoId.length);
   }
 
   @override
@@ -27,28 +31,34 @@ class CommunityCard extends StatefulWidget {
 }
 
 class _CommunityCardState extends State<CommunityCard> {
-  late String userId = "";
+  String userId = Staticfile.uid;
   final dbRef = FirebaseDatabase.instance.ref().child("Community");
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseAuth auth = FirebaseAuth.instance;
-    userId = auth.currentUser == null ? "" : auth.currentUser!.uid;
-    print(userCheck().toString());
+    // print(userCheck().toString());
   }
 
   void addUserToMemberList(String communityId) async{
-    String userId = Staticfile.uid;
+    if(Staticfile.type=="User")
     await dbRef.child(communityId.toString()).child("memberList").update({
-      userId.toString():true,
+      Staticfile.uid.toString():true,
     });
+    else{
+      await dbRef.child(communityId.toString()).child("ngoId").update({
+      Staticfile.uid.toString():true,
+    });
+    }
   }
 
   bool userCheck() {
-    // userId = "userid1";
-    return widget.memberList.contains(userId);
+    if(Staticfile.type=="User"){
+      return widget.memberList.contains(userId);
+    }
+    return widget.ngoId.contains(userId);
   }
 
   String getButtonString() {
@@ -57,10 +67,11 @@ class _CommunityCardState extends State<CommunityCard> {
 
   @override
   Widget build(BuildContext context) {
+    String btext=getButtonString();
     return Center(
       child: Container(
           decoration: BoxDecoration(
-              color: const Color.fromRGBO(84, 116, 253, 1),
+              color: const Color(0xFFd8f2fd),
               borderRadius: BorderRadius.circular(16)),
           margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
           child: Container(
@@ -75,7 +86,7 @@ class _CommunityCardState extends State<CommunityCard> {
                       width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: const Color.fromRGBO(84, 116, 253, 1),
+                        color: const Color(0xFFd8f2fd),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16.0),
@@ -88,40 +99,42 @@ class _CommunityCardState extends State<CommunityCard> {
                     Container(
                       height: 150.0,
                       padding: const EdgeInsets.only(top: 8.0),
-                      color: const Color.fromRGBO(84, 116, 253, 1),
+                      color: const Color(0xFFd8f2fd),
                       child: Column(
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Text(widget.domain,
                                 style: const TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                    fontSize: 19.0,
+                                    color: Color.fromARGB(255, 0, 0, 0),
                                     decoration: TextDecoration.none)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(2.0),
-                            child: Text(widget.motto,
+                            child: Text("Motto : ${widget.motto}",
                                 style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
                                     fontSize: 15.0,
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 0, 0, 0),
                                     decoration: TextDecoration.none)),
                           ),
                           Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: Text(
-                                  "${widget.memberList.length.toString()} members",
+                                  "Members : ${widget.memberList.length.toString()}",
                                   style: const TextStyle(
                                       fontSize: 15.0,
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 0, 0, 0),
                                       decoration: TextDecoration.none))),
                           Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Text(
-                                "${widget.ngoId.length.toString()} NGOs associated",
+                                "NGOs : ${widget.ngoId.length.toString()}",
                                 style: const TextStyle(
                                     fontSize: 15.0,
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 0, 0, 0),
                                     decoration: TextDecoration.none)),
                           ),
                           Padding(
@@ -138,16 +151,24 @@ class _CommunityCardState extends State<CommunityCard> {
                                                   widget.domain)));
                                 } else {
                                   addUserToMemberList(widget.id);
+                                  setState(() {
+                                    btext=getButtonString();        
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CommunityDetailPage(
+                                                  widget.domain)));
                                 }
-                              ;
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Colors.deepOrange)),
-                              child: Text(getButtonString(),
+                                      const Color.fromARGB(255, 255, 124, 124))),
+                              child: Text(btext,
                                   style: const TextStyle(
                                       fontSize: 15.0,
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 0, 0, 0),
                                       decoration: TextDecoration.none)),
                             ),
                           ),

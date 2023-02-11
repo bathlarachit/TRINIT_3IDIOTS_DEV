@@ -25,7 +25,6 @@ class _ProfileState extends State<Profile> {
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    print(Staticfile.type);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:trinit/Community/CommunityPost.dart';
 import 'package:trinit/Modal/Staticfile.dart';
@@ -7,7 +5,7 @@ import 'package:trinit/Modal/Staticfile.dart';
 class CommunityPostCard extends StatefulWidget {
   CommunityPost post = CommunityPost("", "", "", "", [], []);
 
-  CommunityPostCard(CommunityPost post) {
+  CommunityPostCard(CommunityPost post, {super.key}) {
     this.post.commentKeys = post.commentKeys;
     this.post.createdBy = post.createdBy;
     this.post.mssg = post.mssg;
@@ -40,7 +38,7 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
     return (Center(
       child: Container(
           decoration: BoxDecoration(
-              color: const Color.fromRGBO(84, 116, 253, 1),
+              color: const Color.fromARGB(255, 226, 100, 100),
               borderRadius: BorderRadius.circular(16)),
           margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
           child: Container(
@@ -55,7 +53,7 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
                       width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: const Color.fromRGBO(84, 116, 253, 1),
+                        color: const Color.fromARGB(255, 226, 100, 100),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16.0),
@@ -68,7 +66,7 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
                     Container(
                       height: 150.0,
                       padding: const EdgeInsets.only(top: 8.0),
-                      color: const Color.fromRGBO(84, 116, 253, 1),
+                      color: const Color.fromARGB(255, 226, 100, 100),
                       child: Column(
                         children: <Widget>[
                           Padding(
@@ -100,12 +98,15 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 0, 0, 0),),
+                              
                               onPressed: () {
                                 setState(() {
                                   if (liked == false) {
                                     // noOfLikes++;
                                     liked = !liked;
-                                    likeColor = Colors.pink;
+                                    likeColor = const Color.fromARGB(255, 226, 100, 100);
                                   } else {
                                     // noOfLikes--;
                                     liked = !liked;
@@ -113,12 +114,14 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
                                   }
                                 });
                               },
+                              
                               // style: ButtonStyle(
                               //     backgroundColor: MaterialStateProperty.all(
                               //         Colors.deepOrange)),
                               icon: Icon(Icons.favorite,
+                              
                                   color: likeColor, size: 20.0),
-                              label: Text("Like"),
+                              label: const Text("Like"),
                             ),
                           ),
                         ],

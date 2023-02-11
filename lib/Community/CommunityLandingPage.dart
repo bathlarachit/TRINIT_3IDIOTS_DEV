@@ -1,4 +1,5 @@
-import 'dart:ffi';
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, use_build_context_synchronously, prefer_is_empty
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trinit/Community/CommunityCard.dart';
 import 'package:trinit/Community/CommunityDetails.dart';
+import 'package:trinit/Community/CreateCommunity.dart';
 
 import '../BottomNavbar/BottomNavBar.dart';
 import '../EnteringPage/Splash.dart';
@@ -67,7 +69,7 @@ class CommunityLandingPage extends StatelessWidget {
                               image: AssetImage("assets/images/logo.png"))),
                     ),
                     Text(
-                      "Home",
+                      "Community",
                       style: GoogleFonts.roboto(
                         color: Colors.black,
                         fontSize: MediaQuery.of(context).size.width * (0.05),
@@ -121,22 +123,46 @@ class CommunityLandingPage extends StatelessWidget {
                     return Container(
                       height: 50,
                       color: Colors.red[300],
-                      child: const Text("Error vhvh"),
+                      child: const Text("Error"),
                     );
                   } else if (snapshot.hasData) {
                     if (snapshot.data!.length > 0) {
-                      return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return CommunityCard(snapshot.data![index]);
-                          });
+                      return Stack(
+                        children: 
+                        [                          
+                          ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CommunityCard(snapshot.data![index]);
+                            }),
+                            SizedBox(width: MediaQuery.of(context).size.width,child: 
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Padding(padding: EdgeInsets.all(15),child: 
+                              FloatingActionButton(
+                                backgroundColor:Color.fromARGB(255, 255, 124, 124) ,
+                                onPressed: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => CreateCommunity()),
+                                    );
+                                },
+                                child: Icon(Icons.add,size: 30,),
+                              ))
+                            ],
+                          )),
+                            
+                        ]
+                      );
                     }
                   }
                 }
                 return Container(
-                  height: 50,
-                  color: Colors.grey,
-                  child: const Text("Loading"),
+                  height: MediaQuery.of(context).size.height,
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  child: const Center(child: CircularProgressIndicator(),)
                 );
               }),
               future: fetchCommunityDetails(),
