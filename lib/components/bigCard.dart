@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BigCard extends StatelessWidget {
-  const BigCard({super.key});
-
+  const BigCard({super.key, required this.img, required this.name});
+  final String img;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -15,20 +16,21 @@ class BigCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10, top: 10),
             child: Column(
-              children: const [
+              children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: Image(
-                    image: AssetImage('assets/images/dog2.jpg'),
+                    image: NetworkImage(img),
                     height: 150,
                     width: 240,
                     fit: BoxFit.fill,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  'Feel the thrill on the only surf simulator in Maldives ',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  '$name ',
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),
                 )
               ],
             ),
