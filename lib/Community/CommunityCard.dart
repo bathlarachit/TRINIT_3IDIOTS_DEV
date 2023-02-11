@@ -115,7 +115,7 @@ class _CommunityCardState extends State<CommunityCard> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: ElevatedButton(
-                              onPressed: () {print("hello")},
+                              onPressed: () {print("hello");},
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.deepOrange)),
