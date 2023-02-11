@@ -2,12 +2,14 @@
 
 import 'dart:async';
 
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:trinit/Home/HomePage.dart';
 
 import '../Auth/Login.dart';
-import '../Home/HomePage.dart';
-
+import '../constants.dart';
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -18,11 +20,10 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     FirebaseAuth auth = FirebaseAuth.instance;
     Timer(
-        Duration(seconds: 2),
+        Duration(seconds: 3),
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -32,45 +33,33 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-            child: SafeArea(
-                child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height - 50),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 100,
-                                width: MediaQuery.of(context).size.width - 20,
-                                // ignore: prefer_const_constructors
-                                decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                        image: AssetImage("assets/ieee.png"))),
-                              )
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                //margin: EdgeInsets.only(left: 50),
-                                height: 200,
-                                width: 200,
-                                // ignore: prefer_const_constructors
-                                decoration: BoxDecoration(
-                                    // color: Colors.red,
-                                    image: const DecorationImage(
-                                        image: AssetImage("assets/logo.png"))),
-                              )
-                            ])
-                      ],
-                    )))));
+    return Container(
+      child: AnimatedSplashScreen(
+        duration: 3000,
+        splashIconSize: 200,
+        //  centered: true,
+        splashTransition: SplashTransition.fadeTransition,
+        nextScreen: HomePage(),
+        splash: SizedBox(
+          height: 450,
+          width: 350,
+          child: ListView(
+            children: [
+              const Image(
+                height: 120,
+                image: AssetImage('assets/images/read.png'),
+              ),
+              Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Blogesta",
+                    style: GoogleFonts.permanentMarker(
+                        color: colour, fontSize: 32),
+                  )),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
