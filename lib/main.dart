@@ -2,10 +2,10 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:trinit/Community/CommunityDetails.dart';
-import 'package:trinit/Community/CommunityLandingPage.dart';
-import 'package:trinit/EnteringPage/Splash.dart';
 import 'package:trinit/Home/HomePage.dart';
+import 'package:trinit/Ngo/ngo_list.dart';
+
+import 'EnteringPage/Splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
