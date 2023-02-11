@@ -60,7 +60,7 @@ class SignsIn {
           
 
         }
-        GetUserDetails().getUserDetails(type);
+        await GetUserDetails().getUserDetails(type);
         Fluttertoast.showToast(msg: "SignedIn successfully!!");
         return 1;
       }
