@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trinit/VC.dart';
+import 'package:trinit/modal/Staticfile.dart';
 
 import '../modal/ngo.dart';
 
@@ -16,6 +18,29 @@ class InfoPage extends StatelessWidget {
               width: double.infinity,
               height: 260,
               image: NetworkImage(ngo.photo_link),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 300),
+              child: IconButton(
+                  onPressed: () {
+                    var type = Staticfile.type;
+                    print(type);
+                    if (type == 'User') {
+                      var id = Staticfile.uid;
+                      var ngoId = ngo.key;
+                      var callId = id + ngoId;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CallPage(
+                                  callID: callId,
+                                  userName: Staticfile.name,
+                                  userid: id)));
+                    } else {
+                      print('NGo to NGo vc not allowed');
+                    }
+                  },
+                  icon: const Icon(Icons.video_call_outlined)),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 240.0),
