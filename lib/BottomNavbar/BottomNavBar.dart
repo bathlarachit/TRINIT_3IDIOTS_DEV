@@ -6,7 +6,7 @@ import 'package:trinit/Profile/Profile.dart';
 
 import '../Community/CommunityLandingPage.dart';
 import '../Home/HomePage.dart';
-import '../Modal/Staticfile.dart';
+import '../modal/Staticfile.dart';
 
 class BottomNavbar {
   Widget navbar(context){

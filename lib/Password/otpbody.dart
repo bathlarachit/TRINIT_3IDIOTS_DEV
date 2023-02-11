@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trinit/Backend/GetUserDetails.dart';
 import 'package:trinit/EnteringPage/Splash.dart';
 import 'package:trinit/Home/HomePage.dart';
-import '../Modal/Users.dart';
+import '../modal/Users.dart';
 import 'OtpF.dart';
 
 String v = "";

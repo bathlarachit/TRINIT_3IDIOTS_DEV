@@ -1,20 +1,21 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:trinit/modal/Staticfile.dart';
 
 import '../VC.dart';
-import '../Modal/Staticfile.dart';
 import '../modal/ngo.dart';
 
 class InfoPage extends StatelessWidget {
-  const InfoPage({super.key, required this.ngo});
-  final NGO ngo;
+   InfoPage({super.key, required this.ngo});
+   NGO ngo;
 
   @override
   Widget build(BuildContext context) {
     String type = Staticfile.type;
     String id = Staticfile.uid;
     String name = Staticfile.name;
-    String ngoId = ngo.key;
+    String ngoId = "id1";
     String callId = id + ngoId;
 
     print(Staticfile.type);
@@ -37,8 +38,8 @@ class InfoPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CallPage(
-                                  callID: callId, userName: name, userid: id)));
+                              builder: (context) => const CallPage(
+                                  callID: "callId", userName: "shreeram", userid: "id2")));
                     } else {
                       print('NGo to NGo vc not allowed');
                     }

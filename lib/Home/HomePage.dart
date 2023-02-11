@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trinit/BottomNavbar/BottomNavBar.dart';
-import 'package:trinit/Modal/Staticfile.dart';
+import 'package:trinit/modal/Staticfile.dart';
 import 'package:trinit/constants.dart';
 import 'package:trinit/query.dart';
 import 'package:trinit/searchResult.dart';

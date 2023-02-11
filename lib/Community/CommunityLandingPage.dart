@@ -10,7 +10,7 @@ import 'package:trinit/Community/CommunityDetails.dart';
 
 import '../BottomNavbar/BottomNavBar.dart';
 import '../EnteringPage/Splash.dart';
-import '../Modal/Staticfile.dart';
+import '../modal/Staticfile.dart';
 
 class CommunityLandingPage extends StatelessWidget {
   // CommunityLandingPage(Key? key) : super(key: key);

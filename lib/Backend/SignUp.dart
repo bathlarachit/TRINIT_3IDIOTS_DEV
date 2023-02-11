@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:trinit/Modal/Users.dart';
+import 'package:trinit/modal/Users.dart';
 
 class SignUp {
   FirebaseDatabase db = FirebaseDatabase.instance;
