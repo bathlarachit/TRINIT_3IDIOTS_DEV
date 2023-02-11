@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:trinit/Community/CommunityDetails.dart';
+import 'package:trinit/Community/CommunityDetailPage.dart';
+import '../Modal/Staticfile.dart';
+
 
 class CommunityCard extends StatefulWidget {
   String id = "";
@@ -23,7 +27,9 @@ class CommunityCard extends StatefulWidget {
 }
 
 class _CommunityCardState extends State<CommunityCard> {
-  late String userId = "userid1";
+  late String userId = "";
+  final dbRef = FirebaseDatabase.instance.ref().child("Community");
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,8 +39,15 @@ class _CommunityCardState extends State<CommunityCard> {
     print(userCheck().toString());
   }
 
+  void addUserToMemberList(String communityId) async{
+    String userId = Staticfile.uid;
+    await dbRef.child(communityId.toString()).child("memberList").update({
+      userId.toString():true,
+    });
+  }
+
   bool userCheck() {
-    userId = "userid1";
+    // userId = "userid1";
     return widget.memberList.contains(userId);
   }
 
@@ -115,7 +128,18 @@ class _CommunityCardState extends State<CommunityCard> {
                             padding: const EdgeInsets.only(top: 6.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                print("hello");
+                                
+                                if (userCheck()) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CommunityDetailPage(
+                                                  widget.domain)));
+                                } else {
+                                  addUserToMemberList(widget.id);
+                                }
+                              ;
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
