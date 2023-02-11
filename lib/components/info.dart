@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Modal/Staticfile.dart';
 import '../modal/ngo.dart';
 
 class InfoPage extends StatelessWidget {
@@ -8,6 +9,7 @@ class InfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Staticfile.type);
     return SafeArea(
       child: Scaffold(
         body: Stack(
