@@ -1,10 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
+import 'dart:ffi';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:trinit/Community/CommunityCard.dart';
 import 'package:trinit/Community/CommunityDetails.dart';
 
 import '../BottomNavbar/BottomNavBar.dart';
@@ -18,14 +16,10 @@ class CommunityLandingPage extends StatelessWidget {
    CommunityLandingPage({super.key});
 
   List<String> getKeys(DataSnapshot list) {
-    print("adaada");
-    print(list.key.toString());
-
     List<String> keysList = [];
-    for (var element in list.children) {
-      keysList.add(element.key.toString());
+    for (var child in list.children) {
+      keysList.add(child.key.toString());
     }
-    print(keysList.length);
     return keysList;
   }
 
@@ -35,28 +29,15 @@ class CommunityLandingPage extends StatelessWidget {
       print("sas");
       List<CommunityDetails> communityList = [];
       for (var community in snapshot.children) {
-        print("AAA");
-        print(community.key.toString());
-        print(community.child("domain").value.toString());
-        print(community.child("motto").value.toString());
-        print(community.child("photo").value.toString());
-        // print(getKeys(community.child("memberList").value));
-        try {
-          CommunityDetails details = CommunityDetails(
-              community.key.toString(),
-              community.child("domain").value.toString(),
-              getKeys(community.child("memberList")),
-              community.child("motto").value.toString(),
-              getKeys(community.child("ngoId")),
-              community.child("photo").value.toString());
-          communityList.add(details);
-          print(communityList[0].memberList.length);
-        } catch (e) {
-          print(e);
-        }
+        CommunityDetails details = CommunityDetails(
+            community.key.toString(),
+            community.child("domain").value.toString(),
+            getKeys(community.child("memberList")),
+            community.child("motto").value.toString(),
+            getKeys(community.child("ngoId")),
+            community.child("photo").value.toString());
+        communityList.add(details);
       }
-      // print(communityList.toString());
-      print("returned");
       return communityList;
     } else {
       return [];
@@ -139,21 +120,13 @@ class CommunityLandingPage extends StatelessWidget {
               child: const Text("Error vhvh"),
             );
           } else if (snapshot.hasData) {
-            return
-             ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      height: 50,
-                      color: Colors.amber,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(snapshot.data![index].id),
-                          Text(snapshot.data![index].domain),
-                        ],
-                      ));
-                });
+            if (snapshot.data!.length > 0) {
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CommunityCard(snapshot.data![index]);
+                  });
+            }
           }
         }
         return Container(
