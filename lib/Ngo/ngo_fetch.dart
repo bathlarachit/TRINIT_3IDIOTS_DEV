@@ -10,6 +10,7 @@ Future<List<NGO>> getNgoList() async {
     for (var i in snapshot.children) {
       try {
         NGO ngo = NGO(
+          loc: i.child("location").value.toString(),
           name: i.child("name").value.toString(),
           acc_name:
               i.child("accountProof").child('accountName').value.toString(),
@@ -19,6 +20,10 @@ Future<List<NGO>> getNgoList() async {
               i.child("accountProof").child('accountNo').value.toString()),
           community: [],
           impact: [],
+          // for(var j in i.child('impact').childer)
+          // {
+
+          // }
           mission: i.child('mission').value.toString(),
           photo_link: i.child('photo').value.toString(),
           prev_work: i.child('previousWork').value,

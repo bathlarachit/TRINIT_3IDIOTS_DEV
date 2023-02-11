@@ -7,9 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:trinit/BottomNavbar/BottomNavBar.dart';
 import 'package:trinit/Modal/Staticfile.dart';
 import 'package:trinit/constants.dart';
-
+import 'package:trinit/query.dart';
+import 'package:trinit/searchResult.dart';
 import '../EnteringPage/Splash.dart';
+import '../Ngo/ngo_fetch.dart';
 import '../components/bigCard.dart';
+import '../components/info.dart';
+import '../modal/ngo.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,7 +24,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  
+
+  var query = "";
+  List<NGO> ngoList = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -94,24 +106,45 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: [
                     TextFormField(
+                      onChanged: (value) {
+                        query = value;
+                      },
                       decoration: const InputDecoration(
                           constraints: BoxConstraints(maxWidth: 280),
                           focusedBorder: OutlineInputBorder(),
                           hintText: "Search for NGO's....",
                           border: InputBorder.none),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        border: Border.all(),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
-                      ),
-                      height: 60,
-                      width: 60,
-                      child: const Icon(
-                        Icons.search_rounded,
-                        color: Colors.white,
+                    GestureDetector(
+                      onTap: () async {
+                        await getNgoList().then((value) {
+                          setState(() {
+                            ngoList = value;
+                          });
+                          var qlist = filter(getKeyWords(query), ngoList);
+                          // print('qlist');
+                          // print(qlist.length);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchResult(
+                                        ngo: qlist,
+                                      )));
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          border: Border.all(),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(16)),
+                        ),
+                        height: 60,
+                        width: 60,
+                        child: const Icon(
+                          Icons.search_rounded,
+                          color: Colors.white,
+                        ),
                       ),
                     )
                   ],
@@ -128,14 +161,16 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  height: 250,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) => BigCard(),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 250,
+                //   child: ListView.builder(
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: 5,
+                //     itemBuilder: (BuildContext context, int index) => BigCard(
+                //                 img: snapshot.data![index].photo_link,
+                //                 name: snapshot.data![index].name),,
+                //   ),
+                // ),
                 SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,10 +185,39 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(
                   height: 250,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) => BigCard(),
+                  child: FutureBuilder(
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: Text('Loading'));
+                      }
+
+                      // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('Error'));
+                      }
+
+                      // IF IT WORKS IT GOES HERE!
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => InfoPage(
+                                            ngo: snapshot.data![index],
+                                          )));
+                            },
+                            child: BigCard(
+                                img: snapshot.data![index].photo_link,
+                                name: snapshot.data![index].name),
+                          );
+                        },
+                      );
+                    },
+                    future: getNgoList(),
                   ),
                 ),
               ],

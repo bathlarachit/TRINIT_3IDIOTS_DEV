@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trinit/Community/CommunityDetails.dart';
 
@@ -10,13 +9,13 @@ class CommunityCard extends StatefulWidget {
   String motto = "";
   List<String> ngoId = [];
   String photo = "";
-  CommunityCard(CommunityDetails details) {
-    this.id = details.id;
-    this.domain = details.domain;
-    this.memberList = details.memberList;
-    this.motto = details.motto;
-    this.ngoId = details.ngoId;
-    this.photo = details.photo;
+  CommunityCard(CommunityDetails details, {super.key}) {
+    id = details.id;
+    domain = details.domain;
+    memberList = details.memberList;
+    motto = details.motto;
+    ngoId = details.ngoId;
+    photo = details.photo;
   }
 
   @override
@@ -115,7 +114,9 @@ class _CommunityCardState extends State<CommunityCard> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: ElevatedButton(
-                              onPressed: () {print("hello");},
+                              onPressed: () {
+                                print("hello");
+                              },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.deepOrange)),

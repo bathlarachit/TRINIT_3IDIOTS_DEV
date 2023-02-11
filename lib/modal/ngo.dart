@@ -4,6 +4,7 @@ class NGO {
   var community = [];
   var acc_num;
   var ifsc;
+  String loc;
   String acc_name;
   var mission;
   var photo_link;
@@ -14,6 +15,7 @@ class NGO {
     required this.community,
     required this.acc_num,
     required this.ifsc,
+    required this.loc,
     required this.acc_name,
     required this.mission,
     required this.photo_link,

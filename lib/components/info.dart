@@ -47,6 +47,14 @@ class InfoPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    const Text(
+                      'Social Impact',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    // ListView.builder(itemBuilder: (context, index) {
+                    //   return null;
+                    // }),
                     Container(
                       height: 50,
                       width: double.infinity,
