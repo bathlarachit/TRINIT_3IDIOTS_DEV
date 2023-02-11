@@ -12,10 +12,10 @@ class InfoPage extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: [
-            const Image(
+            Image(
               width: double.infinity,
               height: 260,
-              image: AssetImage('assets/images/hamster.jpg'),
+              image: NetworkImage(ngo.photo_link),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 240.0),
@@ -40,9 +40,9 @@ class InfoPage extends StatelessWidget {
                     const SizedBox(
                       height: 28,
                     ),
-                    const Text(
-                      'Animal welfare is the well-being of non-human animals. Formal standards of animal welfare vary between contexts, but are debated mostly by animal welfare groups, legislators, and academics. Animal welfare science uses measures such as longevity, disease, immunosuppression, behavior, physiology, and reproduction, although there is debate about which of these best indicate animal welfare.',
-                      style: TextStyle(fontSize: 17),
+                    Text(
+                      '${ngo.mission}',
+                      style: const TextStyle(fontSize: 17),
                     ),
                     const SizedBox(
                       height: 20,

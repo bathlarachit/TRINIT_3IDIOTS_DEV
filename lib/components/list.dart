@@ -54,8 +54,8 @@ class _CardListState extends State<CardList> {
     return Card(
       elevation: 0,
       child: ListTile(
-        leading: const Image(
-          image: AssetImage('assets/images/dog.jfif'),
+        leading: Image(
+          image: NetworkImage(ngo.photo_link),
           height: 140,
           width: 100,
         ),

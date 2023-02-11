@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trinit/BottomNavbar/BottomNavBar.dart';
+import 'package:trinit/constants.dart';
 import '../EnteringPage/Splash.dart';
+import '../components/bigCard.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -79,72 +81,102 @@ class _HomePageState extends State<HomePage> {
         ),
         resizeToAvoidBottomInset: true,
         bottomNavigationBar: BottomNavbar().navbar(context),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Image(
-                    height: 70,
-                    width: 70,
-                    image: AssetImage('assets/images/man.png'),
-                  ),
-                  Column(
-                    children: const [
-                      Text(
-                        'Welcome Back!',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Sunday, 12 Febraury'),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              // const Card(
-              //   elevation: 0,
-              //   child: ListTile(
-              //     leading: Image(
-              //       image: AssetImage('assets/images/man.png'),
-              //     ),
-              //     title: Text(
-              //       'Welcome Back!',
-              //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              //     ),
-              //     subtitle: Text('Sunday, 12 Febraury'),
-              //   ),
-              // ),
-
-              Row(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        constraints: BoxConstraints(maxWidth: 280),
-                        focusedBorder: OutlineInputBorder(),
-                        hintText: "Search for NGO's....",
-                        border: InputBorder.none),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      border: Border.all(),
-                      borderRadius: const BorderRadius.all(Radius.circular(16)),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Image(
+                      height: 70,
+                      width: 70,
+                      image: AssetImage('assets/images/man.png'),
                     ),
-                    height: 60,
-                    width: 60,
-                    child: const Icon(
-                      Icons.search_rounded,
-                      color: Colors.white,
+                    Column(
+                      children: const [
+                        Text(
+                          'Welcome Back!',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('Sunday, 12 Febraury'),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          constraints: BoxConstraints(maxWidth: 280),
+                          focusedBorder: OutlineInputBorder(),
+                          hintText: "Search for NGO's....",
+                          border: InputBorder.none),
                     ),
-                  )
-                ],
-              ),
-            ],
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        border: Border.all(),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                      ),
+                      height: 60,
+                      width: 60,
+                      child: const Icon(
+                        Icons.search_rounded,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recommended for You',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                    TextButton(onPressed: () {}, child: Text('View More'))
+                  ],
+                ),
+                SizedBox(height: 10),
+                SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) => BigCard(),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Explore the NGO', style: tstyle),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/NgoList');
+                        },
+                        child: Text('View more'))
+                  ],
+                ),
+                SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) => BigCard(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
