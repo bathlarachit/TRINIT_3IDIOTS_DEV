@@ -1,5 +1,5 @@
 class NGO {
-  late String name;
+  String name;
   var impact = [];
   var community = [];
   var acc_num;

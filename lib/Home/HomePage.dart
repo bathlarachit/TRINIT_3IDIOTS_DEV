@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trinit/components/list.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -102,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              const CardList()
             ],
           ),
         ),

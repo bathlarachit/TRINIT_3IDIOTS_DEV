@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../modal/ngo.dart';
+
 class InfoPage extends StatelessWidget {
-  const InfoPage({super.key});
+  const InfoPage({super.key, required this.ngo});
+  final NGO ngo;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +32,10 @@ class InfoPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(top: 30.0, left: 30, right: 30),
                   child: Column(children: [
-                    const Text(
-                      'Unrevel the mysteries of the Maldives',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    Text(
+                      ngo.name,
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 28,
@@ -52,7 +55,7 @@ class InfoPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16)),
                       child: const Center(
                         child: Text(
-                          'Raise Funds',
+                          'Donate',
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
                       ),
