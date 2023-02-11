@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:trinit/Profile/Profile.dart';
 
 import '../Community/CommunityLandingPage.dart';
 import '../Home/HomePage.dart';
@@ -52,7 +53,7 @@ class BottomNavbar {
                 Staticfile.navIndex=3;
                 Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),(Route<dynamic> route) => false);
+                      MaterialPageRoute(builder: (context) => Profile()),(Route<dynamic> route) => false);
               },
             ),
           ],

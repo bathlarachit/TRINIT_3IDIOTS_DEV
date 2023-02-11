@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:trinit/Home/HomePage.dart';
 import 'package:trinit/Ngo/ngo_list.dart';
 
+import 'EnteringPage/Splash.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,9 +24,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/": (context) => const HomePage(),
-        '/home': (context) => const HomePage(),
-        '/NgoList': (context) => const NgoList(),
+        "/": (context) => const Splash(),
+        '/home': (context) => const Splash()
       },
     );
   }
