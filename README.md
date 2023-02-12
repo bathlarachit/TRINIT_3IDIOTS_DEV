@@ -1,6 +1,8 @@
 # Trinit
 
-### PS
+[Demo Presentation](https://drive.google.com/file/d/1nvTHWSutsTIcWnkJWeb3zktU-gUmKPX8/view?usp=sharing) 
+
+### Problem Statement:
 Rooting for a good cause, Philanthropic organizations use their resources to improve society. However, they need to be equipped to do so. On the other side, local non-profit organizations (NGOs) rely on the funding provided by various funders. In today’s world, there is a growing need for an effective platform to connect philanthropists and NGOs to help positively impact society. Currently, the process of finding and supporting the right cause can take time and effort, with limited transparency into the impact of the donations. 
 
 ### Objectives: 
