@@ -9,20 +9,21 @@ import '../VC.dart';
 import '../fundTransaction.dart';
 import '../modal/ngo.dart';
 
-
-Future get()async{
- String url = "upi://pay?pa=9328268483@ybl&pn=Shubhank&am=1&tn=TestPayment&cu=INR";
- var result = await launch(url);
-     debugPrint(result.toString());
-     if (result ==true) {
-       print("Done");
-     } else if (result ==false){
-       print("Fail");
-     }
+Future get() async {
+  String url =
+      "upi://pay?pa=9328268483@ybl&pn=Shubhank&am=1&tn=TestPayment&cu=INR";
+  var result = await launch(url);
+  debugPrint(result.toString());
+  if (result == true) {
+    print("Done");
+  } else if (result == false) {
+    print("Fail");
+  }
 }
+
 class InfoPage extends StatelessWidget {
-   InfoPage({super.key, required this.ngo});
-   NGO ngo;
+  InfoPage({super.key, required this.ngo});
+  NGO ngo;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +54,9 @@ class InfoPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const CallPage(
-
-                                  callID: "callId", userName: "shreeram", userid: "id2")));
-
+                                  callID: "callId",
+                                  userName: "shreeram",
+                                  userid: "id2")));
                     } else {
                       print('NGo to NGo vc not allowed');
                     }
@@ -139,12 +140,14 @@ class InfoPage extends StatelessWidget {
                           color: const Color.fromRGBO(84, 116, 253, 1),
                           borderRadius: BorderRadius.circular(16)),
                       child: InkWell(
-                        onTap: ()async{
+                        onTap: () async {
                           await get();
                         },
-                        child: Text(
-                          'Donate',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        child: Center(
+                          child: Text(
+                            'Donate',
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
                         ),
                       ),
                     )

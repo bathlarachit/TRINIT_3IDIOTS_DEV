@@ -74,31 +74,35 @@ Future<List<NGO>> getNgoListWithFilter(List<String> nlist) async {
 
         int flag = 1;
         for (var j in i.child('impact').children) {
-          imp.add(j);
+          imp.add(j.key);
           for (var z in nlist) {
-            if (z == j) flag = 0;
+            if (z == j.key) {
+              flag = 0;
+              print("Equall");
+            }
           }
         }
-        if (flag == 0) continue;
-        NGO ngo = NGO(
-          UpiId: i.child("accountProof").child('upiId').value.toString(),
-          key: i.key.toString(),
-          loc: i.child("location").value.toString(),
-          name: i.child("name").value.toString(),
-          acc_name:
-              i.child("accountProof").child('accountName').value.toString(),
-          ifsc:
-              int.parse(i.child("accountProof").child('ifsc').value.toString()),
-          acc_num: int.parse(
-              i.child("accountProof").child('accountNo').value.toString()),
-          community: [],
-          impact: imp,
-          mission: i.child('mission').value.toString(),
-          photo_link: i.child('photo').value.toString(),
-          prev_work: i.child('previousWork').value,
-        );
-
-        ngoList.add(ngo);
+        if (flag != 1) {
+          NGO ngo = NGO(
+            UpiId: i.child("accountProof").child('upiId').value.toString(),
+            key: i.key.toString(),
+            loc: i.child("location").value.toString(),
+            name: i.child("name").value.toString(),
+            acc_name:
+                i.child("accountProof").child('accountName').value.toString(),
+            ifsc: int.parse(
+                i.child("accountProof").child('ifsc').value.toString()),
+            acc_num: int.parse(
+                i.child("accountProof").child('accountNo').value.toString()),
+            community: [],
+            impact: imp,
+            mission: i.child('mission').value.toString(),
+            photo_link: i.child('photo').value.toString(),
+            prev_work: i.child('previousWork').value,
+          );
+          ngoList.add(ngo);
+          print(ngoList.length);
+        }
       } catch (e) {
         print(e);
       }
