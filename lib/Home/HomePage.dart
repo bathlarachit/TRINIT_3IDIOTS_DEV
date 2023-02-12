@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        'Saturday, ${DateTime.now().day} Febraury',
+                        'Sunday, ${DateTime.now().day} Febraury',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
