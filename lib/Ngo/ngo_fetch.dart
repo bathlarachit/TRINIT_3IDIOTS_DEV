@@ -49,6 +49,7 @@ Future<List<NGO>> getNgoList() async {
           mission: i.child('mission').value.toString(),
           photo_link: i.child('photo').value.toString(),
           prev_work: i.child('previousWork').value,
+          mail:i.child('email').value.toString(),
         );
 
         ngoList.add(ngo);
@@ -96,6 +97,7 @@ Future<List<NGO>> getNgoListWithFilter(List<String> nlist) async {
           mission: i.child('mission').value.toString(),
           photo_link: i.child('photo').value.toString(),
           prev_work: i.child('previousWork').value,
+          mail: i.child('email').value.toString(),
         );
 
         ngoList.add(ngo);
