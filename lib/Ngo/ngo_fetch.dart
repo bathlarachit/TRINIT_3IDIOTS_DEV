@@ -49,6 +49,7 @@ Future<List<NGO>> getNgoList() async {
           mission: i.child('mission').value.toString(),
           photo_link: i.child('photo').value.toString(),
           prev_work: i.child('previousWork').value,
+          mail: i.child('email').value.toString(),
         );
 
         ngoList.add(ngo);
@@ -82,27 +83,27 @@ Future<List<NGO>> getNgoListWithFilter(List<String> nlist) async {
             }
           }
         }
-        if (flag != 1) {
-          NGO ngo = NGO(
-            UpiId: i.child("accountProof").child('upiId').value.toString(),
-            key: i.key.toString(),
-            loc: i.child("location").value.toString(),
-            name: i.child("name").value.toString(),
-            acc_name:
-                i.child("accountProof").child('accountName').value.toString(),
-            ifsc: int.parse(
-                i.child("accountProof").child('ifsc').value.toString()),
-            acc_num: int.parse(
-                i.child("accountProof").child('accountNo').value.toString()),
-            community: [],
-            impact: imp,
-            mission: i.child('mission').value.toString(),
-            photo_link: i.child('photo').value.toString(),
-            prev_work: i.child('previousWork').value,
-          );
-          ngoList.add(ngo);
-          print(ngoList.length);
-        }
+        if (flag == 0) continue;
+        NGO ngo = NGO(
+          UpiId: i.child("accountProof").child('upiId').value.toString(),
+          key: i.key.toString(),
+          loc: i.child("location").value.toString(),
+          name: i.child("name").value.toString(),
+          acc_name:
+              i.child("accountProof").child('accountName').value.toString(),
+          ifsc:
+              int.parse(i.child("accountProof").child('ifsc').value.toString()),
+          acc_num: int.parse(
+              i.child("accountProof").child('accountNo').value.toString()),
+          community: [],
+          impact: imp,
+          mission: i.child('mission').value.toString(),
+          photo_link: i.child('photo').value.toString(),
+          prev_work: i.child('previousWork').value,
+          mail: i.child('email').value.toString(),
+        );
+
+        ngoList.add(ngo);
       } catch (e) {
         print(e);
       }

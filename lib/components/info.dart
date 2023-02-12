@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trinit/Ngo/ngo_fetch.dart';
 import 'package:trinit/modal/Staticfile.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,9 +10,9 @@ import '../VC.dart';
 import '../fundTransaction.dart';
 import '../modal/ngo.dart';
 
-Future get() async {
+Future get(NGO ngo) async {
   String url =
-      "upi://pay?pa=9328268483@ybl&pn=Shubhank&am=1&tn=TestPayment&cu=INR";
+      "upi://pay?pa=${ngo.UpiId}&pn=${ngo.name}&am=1000&tn=TestPayment&cu=INR";
   var result = await launch(url);
   debugPrint(result.toString());
   if (result == true) {
@@ -93,6 +94,22 @@ class InfoPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(15),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color.fromARGB(255, 60, 60, 60))),
+                        child: Text(
+                          "Location :- ${ngo.loc}\nEmail :- ${ngo.mail}\nUpi Id :- ${ngo.UpiId} \nAccount No. :- ${ngo.acc_num} \nAccount Name :- ${ngo.acc_name}\nIFSC Code :- ${ngo.ifsc}",
+                          textAlign: TextAlign.justify,
+                          style: GoogleFonts.roboto(
+                            fontSize:
+                                MediaQuery.of(context).size.width * (0.04),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )),
                     const Text(
                       'Social Impact',
                       style:
@@ -135,18 +152,18 @@ class InfoPage extends StatelessWidget {
                     // }),
                     Container(
                       height: 50,
-                      width: double.infinity,
+                      width: MediaQuery.of(context).size.width / 3,
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(84, 116, 253, 1),
                           borderRadius: BorderRadius.circular(16)),
                       child: InkWell(
                         onTap: () async {
-                          await get();
+                          await get(ngo);
                         },
                         child: Center(
                           child: Text(
                             'Donate',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
+                            style: TextStyle(color: Colors.white, fontSize: 17),
                           ),
                         ),
                       ),
