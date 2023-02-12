@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:trinit/Modal/Staticfile.dart';
+import 'package:trinit/modal/Staticfile.dart';
 
 class GetUserDetails {
   Future getUserDetails(String status) async{
