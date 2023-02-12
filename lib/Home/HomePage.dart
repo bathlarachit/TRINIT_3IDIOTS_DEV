@@ -35,12 +35,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     klist = Staticfile.selectedImpact;
 
-    getNgoList().then((value) {
-      setState(() {
-        nq = value;
-        nq = recFilter(nq, klist);
-      });
-    });
+    // getNgoList().then((value) {
+    //   setState(() {
+    //     nq = value;
+    //     nq = recFilter(nq, klist);
+    //   });
+    // });
 
     super.initState();
   }
@@ -184,26 +184,45 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  height: 250,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: nq.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => InfoPage(
-                                          ngo: nq[index],
-                                        )));
+                (klist.isNotEmpty)
+                    ? SizedBox(
+                        height: 250,
+                        child: FutureBuilder(
+                          future: getNgoListWithFilter(klist),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(child: Text('Loading'));
+                            }
+
+                            // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
+                            if (snapshot.hasError) {
+                              return const Center(child: Text('Error'));
+                            }
+
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => InfoPage(
+                                                  ngo: snapshot.data![index],
+                                                )));
+                                  },
+                                  child: BigCard(
+                                      img: snapshot.data![index].photo_link,
+                                      name: snapshot.data![index].name),
+                                );
+                              },
+                            );
                           },
-                          child: BigCard(
-                              img: nq[index].photo_link, name: nq[index].name),
-                        );
-                      }),
-                ),
+                          initialData: [],
+                        ),
+                      )
+                    : Center(child: Text('Please select Impact first')),
                 SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

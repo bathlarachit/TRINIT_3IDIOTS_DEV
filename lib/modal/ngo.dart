@@ -4,12 +4,17 @@ class NGO {
   var community = [];
   var acc_num;
   var ifsc;
+  // var fundRaised = 0;
+  // var fundUsed = 0;
+  // var fundTrans = [];
   String key;
   String loc;
   String acc_name;
   var mission;
   var photo_link;
   var prev_work;
+
+  var UpiId;
   NGO({
     required this.name,
     required this.impact,
@@ -18,9 +23,21 @@ class NGO {
     required this.ifsc,
     required this.key,
     required this.loc,
+    required this.UpiId,
     required this.acc_name,
     required this.mission,
     required this.photo_link,
     required this.prev_work,
+  });
+}
+
+class Funds {
+  String FundRaised;
+  String fundUsed;
+  String trans;
+  Funds({
+    required this.FundRaised,
+    required this.fundUsed,
+    required this.trans,
   });
 }

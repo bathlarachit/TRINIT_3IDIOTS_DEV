@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trinit/Ngo/ngo_fetch.dart';
 import 'package:trinit/modal/Staticfile.dart';
 
 import '../VC.dart';
+import '../fundTransaction.dart';
 import '../modal/ngo.dart';
 
 class InfoPage extends StatelessWidget {
@@ -79,6 +81,38 @@ class InfoPage extends StatelessWidget {
                       'Social Impact',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    FutureBuilder(
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(child: Text('Loading'));
+                        }
+
+                        // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
+                        if (snapshot.hasError) {
+                          return const Center(child: Text('Error'));
+                        }
+
+                        // IF IT WORKS IT GOES HERE!
+                        return Column(
+                          children: [
+                            Text(
+                                'Total Fund Raised:${snapshot.data!.FundRaised}'),
+                            TextButton(
+                                onPressed: () {
+                                  // print(snapshot.data!.trans);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FundTable(
+                                              fnds: snapshot.data!.trans
+                                                  .toString())));
+                                },
+                                child: const Text('View Transactions'))
+                          ],
+                        );
+                      },
+                      future: getFunds(ngo.key),
                     ),
                     // ListView.builder(itemBuilder: (context, index) {
                     //   return null;
