@@ -6,7 +6,7 @@ class NGO {
   var community = [];
   var acc_num;
   var ifsc;
-  String key = "";
+  String key = "",mail="";
   String loc;
   String acc_name;
   var mission;
@@ -27,6 +27,8 @@ class NGO {
     required this.mission,
     required this.photo_link,
     required this.prev_work,
+    required this.mail,
+
   });
 }
 
